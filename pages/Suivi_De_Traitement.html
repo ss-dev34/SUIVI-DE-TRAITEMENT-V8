@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de Traitement</title>
+      <!--pdf-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!--execl-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../style/index.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary w-100 position-fixed z-3 top-0"  data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+               <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="../index.html">Home</a>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Parcelaire.html">Parcelaire</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="Liste_Positive.html">Liste Positive</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Suivi De Traitement</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link " href="Suivi_Recolte.html">Suivi De Recolte</a>
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+      
+    <div  class="m-5">
+        
+      
+        <h1 style="visibility: hidden;">-</h1>
+        <h1 class="mt-1">Suivi De Traitement</h1>
+        <p>-----------------</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Nombre Des Traitement : <span id="Suivi_Quantity" class="badge text-bg-secondary">0</span></h4>
+            </div>
+          
+             <h4><button class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#Suivi_inputs">Ajouter Une Suivi</button></h4>
+
+
+           
+              <!--dounload dropdown-->
+              <div id="downloadBTN">  
+                <div  class="dropdown d-flex justify-content-end">
+                  <button class="btn btn-outline-warning text-center dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Télécharger<i class="bi bi-file-earmark-arrow-down"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><button onclick="exportToExcel()"  class="dropdown-item" >Excel  <i class="bi bi-filetype-xlsx"></i></button></li>
+                    <li><button onclick="exportToPDF()" class="dropdown-item" >Pdf <i class="bi bi-filetype-pdf"></i></button></li>
+                    <li><a class="dropdown-item" href="#">Autre</a></li>
+                  </ul>
+                </div>
+  
+  
+              </div>
+            
+
+
+            
+        </div>
+        <div class="table-responsive fixed-header-container my-3 ">
+            <table class="table text-center table-striped" border="0" >
+                <thead  style="vertical-align: middle;">
+                    <tr>
+                         
+                        <th scope="col" rowspan="2">N° Ordre</th>
+                        <th style="padding: 0px 50px;" scope="col" rowspan="2">Date</th>
+                        <th scope="col" colspan="2">Heure</th>
+                        <th scope="col" rowspan="2" >Parcelle</th>
+                        <th scope="col" rowspan="2" >Superficie</th>
+                        <th scope="col" rowspan="2" >Variété</th>
+                        <th scope="col" rowspan="2" >Produit commercial</th>
+                        <th scope="col" rowspan="2" >Matière active </th>
+                        <th scope="col" rowspan="2" >Dose </th>
+                        <th scope="col" rowspan="2" >Dose par </th>
+                        <th scope="col" rowspan="2" >Bouillie </th>
+                        <th scope="col" rowspan="2" >Quantité Produit</th>
+                        <th scope="col" rowspan="2" >Cible</th>
+                        <th scope="col" rowspan="2" >DAR</th> 
+                        <th style="padding: 0px 50px;" scope="col" rowspan="2" >Récolte Prevu Le</th>
+
+                        <th scope="col" rowspan="2" >Matériel</th>
+                        <th scope="col" rowspan="2" >Méthode</th>
+                        <th scope="col" rowspan="2" >Opérateurs </th>
+                        <th scope="col" colspan="4" >Conditions climatiques </th>
+                        <th scope="col" rowspan="2" >Gestion de la lutte intégrée </th>
+                        <th scope="col" rowspan="2" >Action </th>
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" >Début</th>
+                        <th scope="col" >Fin</th>
+                        <th scope="col" >Vent</th>
+                        <th scope="col" >T(°C)</th>
+                        <th scope="col" >Pluie</th>
+                        <th scope="col" >Nuages</th>
+                        
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider" id="tbody">
+                    
+                    
+    
+                  
+                    
+                     
+                    
+                </tbody>
+            </table>
+
+
+        </div>
+        <!--delete virification model-->
+
+    <div class="modal fade" id="delet_v" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md ">
+          <div class="modal-content  ">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+            </div>
+            <div class="modal-body text-center ">
+                <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                <p>Voulez-vous supprimer ce  <span id="Pro_Name"  class="badge text-bg-warning">Suivi ?</span></p>
+                <p>Cette action est définitive.</p>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button onclick="Delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+         <!--Suivi_inputs_model_Ajouter-->
+
+  <div class="modal fade" id="Suivi_inputs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter Une Suivi</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+              
+                <div class="mb-3">
+                  <label for="n_order" class="form-label">N° Ordre <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="n_order" >
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="date" class="form-label">Date <span class="text-danger">*</span> :</label>
+                  <input type="date" class="form-control" required id="date" >
+                </div>
+                <div class="mb-3">
+                  <label for="date" class="form-label">Heure <span class="text-danger">*</span> :</label>
+                  <div class="input-group mb-3">
+                    
+                    <span class="input-group-text">Début <span class="text-danger">*</span></span>
+                    <input type="time" class="form-control" id="heure_debut">
+                    <span class="input-group-text">Fin <span class="text-danger">*</span></span>
+                    <input type="time" class="form-control" id="heure_fin">
+                    
+                  </div>
+                </div>
+
+                
+                <div class="mb-3">
+                  <label for="parcelle" class="form-label">Parcelle <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="parcelle" aria-label="parcelle">
+                  
+                  </select>
+                </div>
+                
+          
+
+
+                <div class="mb-3">
+                  <label for="produit_commercial" class="form-label">Produit commercial <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="produit_commercial" aria-label="produit_commercial">
+                  
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="bouilliee" class="form-label">Bouilliee <span class="text-danger">*</span> :</label>
+                  <input type="number" class="form-control" required id="bouilliee" >
+                </div>
+                <div class="mb-3">
+                  <label for="materiel" class="form-label">Matériel <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="materiel" >
+                </div>
+                <div class="mb-3">
+                  <label for="methode" class="form-label">Méthode <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="methode" aria-label="methode">
+                    <option value="Foliaire">Foliaire</option>
+                    <option value="Injection">Injection</option>
+                  </select>
+
+
+                </div>
+                <div class="mb-3">
+                  <label for="operateurs" class="form-label">Opérateurs <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="operateurs" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="date" class="form-label">Conditions climatiques :</label>
+                    <div class="input-group mb-3">
+                      
+                      <span class="input-group-text">Vent</span>
+                      <input type="text" class="form-control" id="condtiion_clima_vent">
+                      <span class="input-group-text">T(°C)</span>
+                      <input type="text" class="form-control" id="condtiion_clima_TC">
+                      
+                      
+                    </div>
+                    <div class="input-group mb-3">
+                      
+                        <span class="input-group-text">Pluie</span>
+                        <input type="text" class="form-control" id="condtiion_clima_pluie">
+                        <span class="input-group-text">Nuages</span>
+                        <input type="text" class="form-control" id="condtiion_clima_nuages">
+                    </div>
+                  </div>
+                  <!--
+                  <div class="mb-3">
+                    <label for="gli" class="form-label">Gestion de la lutte intégrée :</label>
+                    <input type="text" class="form-control" required id="gli" >
+                  </div>
+                -->
+              </form>
+
+
+
+
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button onclick="Ajouter()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+         <!--Suivi_inputs_model_Modifier-->
+
+  <div class="modal fade" id="Suivi_inputs_Modifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modifie Le <span class="badge text-bg-warning">Suivi</span></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+               <div class="mb-3">
+                  <label for="n_order_modifide" class="form-label">N° Ordre <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="n_order_modifide" >
+                </div>
+                
+                <div class="mb-3">
+                  <label for="date" class="form-label">Date <span class="text-danger">*</span> :</label>
+                  <input type="date" class="form-control" required id="date_modifide" >
+                </div>
+                <div class="mb-3">
+                  <label for="date" class="form-label">Heure <span class="text-danger">*</span> :</label>
+                  <div class="input-group mb-3">
+                    
+                    <span class="input-group-text">Début <span class="text-danger">*</span></span>
+                    <input type="time" class="form-control" id="heure_debut_modifide">
+                    <span class="input-group-text">Fin <span class="text-danger">*</span></span>
+                    <input type="time" class="form-control" id="heure_fin_modifide">
+                    
+                  </div>
+                </div>
+
+                
+                <div class="mb-3">
+                  <label for="parcelle_modifide" class="form-label">Parcelle <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="parcelle_modifide" aria-label="produit_commercial">
+                  </select>
+                </div>
+
+               
+
+                  
+
+
+                <div class="mb-3">
+                  <label for="produit_commercial_modifide" class="form-label">Produit commercial <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="produit_commercial_modifide" aria-label="produit_commercial">
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="bouilliee" class="form-label">Bouilliee <span class="text-danger">*</span> :</label>
+                  <input type="number" class="form-control" required id="bouilliee_modifide" >
+                </div>
+                <div class="mb-3">
+                  <label for="materiel" class="form-label">Matériel <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="materiel_modifide" >
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="methode_modifide" class="form-label">Méthode <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="methode_modifide" aria-label="methode_modifide">
+                    <option value="Foliaire">Foliaire</option>
+                    <option value="Injection">Injection</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="operateurs" class="form-label">Opérateurs <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control" required id="operateurs_modifide" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="date" class="form-label">Conditions climatiques  :</label>
+                    <div class="input-group mb-3">
+                      
+                      <span class="input-group-text">Vent</span>
+                      <input type="text" class="form-control" id="condtiion_clima_vent_modifide">
+                      <span class="input-group-text">T(°C)</span>
+                      <input type="text" class="form-control" id="condtiion_clima_TC_modifide">
+                      
+                      
+                    </div>
+                    <div class="input-group mb-3">
+                      
+                        <span class="input-group-text">Pluie</span>
+                        <input type="text" class="form-control" id="condtiion_clima_pluie_modifide">
+                        <span class="input-group-text">Nuages</span>
+                        <input type="text" class="form-control" id="condtiion_clima_nuages_modifide">
+                    </div>
+                  </div>
+                  <!--
+                  <div class="mb-3">
+                    <label for="gli" class="form-label">Gestion de la lutte intégrée :</label>
+                    <input type="text" class="form-control" required id="gli_modifide" >
+                  </div>
+                  -->
+              </form>
+
+
+
+
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button onclick="Modify()" type="button" class="btn btn-warning" data-bs-dismiss="modal">Modifie</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!--input validation-->
+
+    <div class="modal fade" id="input_validation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm ">
+          <div class="modal-content  ">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+            </div>
+            <div class="modal-body text-center ">
+                <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                <p>Veuillez remplir tous les <span class="badge text-bg-warning">champs obligatoires</span>  avant de l' Ajouter </p>
+              
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!--input_Modifide validation-->
+
+    <div class="modal fade" id="input_modifide_validation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm ">
+          <div class="modal-content  ">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+            </div>
+            <div class="modal-body text-center ">
+                <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                <p>Veuillez remplir tous les <span class="badge text-bg-warning">champs obligatoires</span>  avant de le Modifier </p>
+              
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    <!--toust -->
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="Toast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                <div class="toast-body h6">
+                    L'opération a été réalisée avec succès.
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Annuler"></button>
+                </div>
+            </div>
+        </div>
+
+    <!-- Script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../javascript/Suivi_De_Traitement.js"></script>
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcelaire</title>
+    <!--pdf-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!--execl-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../style/index.css">
+  
+</head>
+<body >
+
+
+    
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary w-100 position-fixed top-0 z-3 "  data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LOGO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="../index.html">Home</a>
+              </li>
+              <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link " href="Parcelaire.html">Parcelaire</a>
+              </li>
+        
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="Liste_Positive.html">Liste Positive</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Suivi_De_Traitement.html">Suivi De Traitement</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Suivi De Recolte</a>
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+        
+        <h1 style="visibility: hidden;">-</h1>
+        <h1 class="mt-5">Suivi De Recolte</h1>
+        <p>-----------------</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Nombre des Recoltes : <span id="Pro_Quantity" class="badge text-bg-secondary">0</span></h4>
+            </div>
+          
+             <h4><button class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#Produit_inputs">Ajouter Une Recolte</button></h4>
+
+
+             <!--dounload dropdown-->
+             <div id="downloadBTN">  
+              <div  class="dropdown d-flex justify-content-end">
+                <button class="btn btn-outline-warning text-center dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Télécharger<i class="bi bi-file-earmark-arrow-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><button onclick="exportToExcel()"  class="dropdown-item" >Excel  <i class="bi bi-filetype-xlsx"></i></button></li>
+              <li><button onclick="exportToPDF()" class="dropdown-item" >Pdf <i class="bi bi-filetype-pdf"></i></button></li>
+                  <li><a class="dropdown-item" href="#">Autre</a></li>
+                </ul>
+              </div>
+
+
+            </div>
+          
+
+
+
+
+
+
+            
+        </div>
+        <div class="table-responsive fixed-header-container my-3  ">
+            <table class="table text-center table-striped">
+                <thead>
+                    <tr>
+                        
+
+                        <th scope="col">Date</th>
+                        <th scope="col">Nomber des caisses</th>
+                        <th scope="col">Parcelle</th>
+                        <th scope="col">Bon de livraison</th>
+                        <th scope="col">Heure début de récolte</th>
+                        <th scope="col">Heure fin de récolte</th>
+                        <th scope="col">Conformité</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+    
+                  
+                    
+                     
+                    
+                </tbody>
+            </table>
+
+
+        </div>
+        
+    </div>
+ 
+    <!--delete virification model-->
+
+    <div class="modal fade" id="delet_v" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md ">
+          <div class="modal-content  ">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+            </div>
+            <div class="modal-body text-center ">
+                <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                <p>Voulez-vous supprimer cette <span class="badge text-bg-warning">Recolte ?</span></p>
+                <p>Cette action est définitive.</p>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button onclick="Delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+
+
+ 
+
+    <!--Produit_inputs_model_Ajouter-->
+
+  <div class="modal fade" id="Produit_inputs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter Une Recolte</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                  <label for="date_recolte" class="form-label">Date <span class="text-danger">*</span> :</label>
+                  <input type="date" class="form-control" required id="date_recolte" >
+                </div>
+
+                <div class="mb-3">
+                  <label for="nbr_caisses" class="form-label">Nomber des caisses <span class="text-danger">*</span> :</label>
+                  <input type="number" class="form-control" id="nbr_caisses" required >
+                </div>
+
+                <div class="mb-3">
+                  <label for="parcelle" class="form-label">Parcelle <span class="text-danger">*</span> :</label>
+                  <select class="form-select" id="parcelle" aria-label="parcelle">
+                  
+                  </select>
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="bon_de_livraison" class="form-label">Bon de livraison <span class="text-danger">*</span> :</label>
+                  <input type="text" class="form-control"  id="bon_de_livraison" >
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="heure_debut_recolte" class="form-label">Heure début de récolte <span class="text-danger">*</span> :</label>
+                  <input type="time" class="form-control"  id="heure_debut_recolte" >
+                </div>
+                <div class="mb-3">
+                  <label for="heure_fin_recolte" class="form-label">Heure fin de récolte <span class="text-danger">*</span> :</label>
+                  <input type="time" class="form-control"  id="heure_fin_recolte" >
+                </div>
+
+                
+
+                
+
+        
+              
+                
+              </form> 
+
+
+
+
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button onclick="Ajouter()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Produit_inputs_model_Modifier-->
+ 
+
+
+  <div class="modal fade" id="Produit_inputs_Modifier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modifie La <span class="badge text-bg-danger">Recolte</span> </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+
+              <div class="mb-3">
+                <label for="date_recolte_modifide" class="form-label">Date <span class="text-danger">*</span> :</label>
+                <input type="date" class="form-control" required id="date_recolte_modifide" >
+              </div>
+
+              <div class="mb-3">
+                <label for="nbr_caisses_modifide" class="form-label">Nomber des caisses <span class="text-danger">*</span> :</label>
+                <input type="number" class="form-control" id="nbr_caisses_modifide" required >
+                </div>
+
+              <div class="mb-3">
+                <label for="parcelle_modifide" class="form-label">Parcelle <span class="text-danger">*</span> :</label>
+                <select class="form-select" id="parcelle_modifide" aria-label="parcelle_modifide">
+                
+                </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="bon_de_livraison_modifide" class="form-label">Bon de livraison <span class="text-danger">*</span> :</label>
+                <input type="text" class="form-control"  id="bon_de_livraison_modifide" >
+              </div>
+
+
+              <div class="mb-3">
+                <label for="heure_debut_recolte_modifide" class="form-label">Heure début de récolte <span class="text-danger">*</span> :</label>
+                <input type="time" class="form-control"  id="heure_debut_recolte_modifide" >
+              </div>
+              <div class="mb-3">
+                <label for="heure_fin_recolte_modifide" class="form-label">Heure fin de récolte <span class="text-danger">*</span> :</label>
+                <input type="time" class="form-control"  id="heure_fin_recolte_modifide" >
+              </div>
+              
+                
+            </form>
+
+
+
+
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button onclick="Modify()" type="button" class="btn btn-warning" data-bs-dismiss="modal">Modifie</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+        <!--input validation-->
+
+        <div class="modal fade" id="input_validation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm ">
+              <div class="modal-content  ">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+                </div>
+                <div class="modal-body text-center ">
+                    <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                    <p>Veuillez remplir tous les <span class="badge text-bg-warning">champs obligatoires</span>  avant de l' Ajouter </p>
+                  
+                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--input_Modifide validation-->
+
+        <div class="modal fade" id="input_modifide_validation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm ">
+              <div class="modal-content  ">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Validation</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Annuler"></button>
+                </div>
+                <div class="modal-body text-center ">
+                    <h1><i style="font-size: 4rem;" class="bi bi-exclamation-triangle-fill text-danger h1 "></i></h1>
+                    <p>Veuillez remplir tous les <span class="badge text-bg-warning">champs obligatoires</span>  avant de le Modifier </p>
+                  
+                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                  
+                </div>
+              </div>
+            </div>  
+          </div>
+
+
+
+
+
+  <!--toust -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="Toast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body h6">
+                L'opération a été réalisée avec succès.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Annuler"></button>
+            </div>
+        </div>
+    </div>
+
+  <!-- Script-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../javascript/Suivi_Recolte.js"></script>
+    
+</body>
+</html>
